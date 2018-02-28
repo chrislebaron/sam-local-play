@@ -1,0 +1,103 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A simple Hello World Serverless project
+Resources:
+  BlogCreate:
+    Properties:
+      CodeUri: s3://chris-lambda-hello/43f30284b23b395b8f828e8fc37f6f5e
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: BlogTable
+      Events:
+        Api:
+          Properties:
+            Method: post
+            Path: /blog/create
+          Type: Api
+      Handler: blog/create.handler
+      MemorySize: 128
+      Policies: AmazonDynamoDBFullAccess
+      Runtime: nodejs6.10
+      Timeout: 10
+    Type: AWS::Serverless::Function
+  BlogList:
+    Properties:
+      CodeUri: s3://chris-lambda-hello/43f30284b23b395b8f828e8fc37f6f5e
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: BlogTable
+      Events:
+        Api:
+          Properties:
+            Method: get
+            Path: /blog
+          Type: Api
+      Handler: blog/list.handler
+      MemorySize: 128
+      Policies: AmazonDynamoDBFullAccess
+      Runtime: nodejs6.10
+      Timeout: 10
+    Type: AWS::Serverless::Function
+  BlogTable:
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: title
+        AttributeType: S
+      KeySchema:
+      - AttributeName: title
+        KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE
+    Type: AWS::DynamoDB::Table
+  HelloWorldGet:
+    Properties:
+      CodeUri: s3://chris-lambda-hello/43f30284b23b395b8f828e8fc37f6f5e
+      Events:
+        Api:
+          Properties:
+            Method: get
+            Path: /hello
+          Type: Api
+      Handler: helloGet/index.handler
+      MemorySize: 128
+      Runtime: nodejs6.10
+      Timeout: 5
+    Type: AWS::Serverless::Function
+  HelloWorldPost:
+    Properties:
+      CodeUri: s3://chris-lambda-hello/43f30284b23b395b8f828e8fc37f6f5e
+      Events:
+        Api:
+          Properties:
+            Method: post
+            Path: /hello
+          Type: Api
+      Handler: helloPost/index.handler
+      MemorySize: 128
+      Runtime: nodejs6.10
+      Timeout: 5
+    Type: AWS::Serverless::Function
+  VoteSpacesTabs:
+    Properties:
+      CodeUri: s3://chris-lambda-hello/43f30284b23b395b8f828e8fc37f6f5e
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: VotesTable
+      Events:
+        Vote:
+          Properties:
+            Method: any
+            Path: /vote
+          Type: Api
+      Handler: votes/votes.lambda_handler
+      Policies: AmazonDynamoDBFullAccess
+      Runtime: python3.6
+    Type: AWS::Serverless::Function
+  VotesTable:
+    Type: AWS::Serverless::SimpleTable
+Transform: AWS::Serverless-2016-10-31

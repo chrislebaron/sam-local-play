@@ -1,0 +1,101 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: A simple Hello World Serverless project
+Resources:
+  BlogCreate:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Handler: blog/create.handler
+      MemorySize: 128
+      Timeout: 10
+      CodeUri: .
+      Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref BlogTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /blog/create
+            Method: post
+  BlogList:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Handler: blog/list.handler
+      MemorySize: 128
+      Timeout: 10
+      CodeUri: .
+      Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref BlogTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /blog
+            Method: get
+  HelloWorldGet:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Handler: helloGet/index.handler
+      MemorySize: 128
+      Timeout: 5
+      CodeUri: .
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
+  HelloWorldPost:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Handler: helloPost/index.handler
+      MemorySize: 128
+      Timeout: 5
+      CodeUri: .
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: post
+
+  VotesTable:
+    Type: "AWS::Serverless::SimpleTable"
+  VoteSpacesTabs:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Runtime: python3.6
+      Handler: votes/votes.lambda_handler
+      Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref VotesTable
+      Events:
+        Vote:
+          Type: Api
+          Properties:
+            Path: /vote
+            Method: any
+  BlogTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: title
+          AttributeType: S
+      KeySchema:
+        - AttributeName: title
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE

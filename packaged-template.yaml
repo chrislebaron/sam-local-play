@@ -1,0 +1,10 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A simple Hello World Serverless project
+Resources:
+  HelloWorld:
+    Properties:
+      CodeUri: s3://chris-lambda-hello/4d1ee082909a4de41f5f7ad8d0606255
+      Handler: index.handler
+      Runtime: nodejs6.10
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31
