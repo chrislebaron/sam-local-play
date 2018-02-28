@@ -18,9 +18,12 @@ const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = (event, context, callback) => {
     console.log("Event", event);
+
+    let body = JSON.parse(event.body);
+    body.createdAt = Math.floor(Date.now() / 1000);
     const params = {
         TableName: table,
-        Item: JSON.parse(event.body)
+        Item: body
     };
 
     console.log("Params: ", params);
