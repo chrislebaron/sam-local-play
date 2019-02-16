@@ -19,7 +19,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /blog/create
+            Path: /blog
             Method: post
   BlogList:
     Type: AWS::Serverless::Function
@@ -95,7 +95,7 @@ Resources:
         - AttributeName: title
           KeyType: HASH
       ProvisionedThroughput:
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
       StreamSpecification:
         StreamViewType: NEW_IMAGE

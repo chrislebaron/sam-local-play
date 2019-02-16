@@ -31,9 +31,10 @@ This uploads your template to an S3 bucket and deploys the specified resources u
 
 ## Setting up DynamoDB Locally ##
 
-You can run DynamoDB locally too, but you'll need to download and install a .jar package to get it running. The AWS documentation is here: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html#DynamoDBLocal.DownloadingAndRunning
+You can run DynamoDB locally too:
+https://hub.docker.com/r/amazon/dynamodb-local/
 
-Make sure that in any serverless functions that use DyanmoDB that you update the local config to point to the correct port. By default DynamoDB will run on port 8000, but I have it configured to run on port 8081 on my machine.
+Make sure that in any serverless functions that use DyanmoDB that you update the local config to point to the correct port. By default DynamoDB will run on port 8000.
 
 Another note with trying to access the local DynamoDB, that because it's running in docker, you'll notice that we don't access it from the Lambda function with `http://localhost:8000`, you need to to access `http://docker.for.mac.localhost:8081` or it will not work.
 
