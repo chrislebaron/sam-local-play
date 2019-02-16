@@ -6,7 +6,7 @@ Resources:
   BlogCreate:
     Type: AWS::Serverless::Function
     Properties:
-      Runtime: nodejs6.10
+      Runtime: nodejs8.10
       Handler: blog/create.handler
       MemorySize: 128
       Timeout: 10
@@ -24,7 +24,7 @@ Resources:
   BlogList:
     Type: AWS::Serverless::Function
     Properties:
-      Runtime: nodejs6.10
+      Runtime: nodejs8.10
       Handler: blog/list.handler
       MemorySize: 128
       Timeout: 10
@@ -42,7 +42,7 @@ Resources:
   HelloWorldGet:
     Type: AWS::Serverless::Function
     Properties:
-      Runtime: nodejs6.10
+      Runtime: nodejs8.10
       Handler: helloGet/index.handler
       MemorySize: 128
       Timeout: 5
@@ -56,7 +56,7 @@ Resources:
   HelloWorldPost:
     Type: AWS::Serverless::Function
     Properties:
-      Runtime: nodejs6.10
+      Runtime: nodejs8.10
       Handler: helloPost/index.handler
       MemorySize: 128
       Timeout: 5

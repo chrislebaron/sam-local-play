@@ -7,7 +7,7 @@ if(process.env.AWS_SAM_LOCAL) {
     console.log('being run locally');
     AWS.config.update({
         region: "us-west-2",
-        endpoint: "http://docker.for.mac.localhost:8081"
+        endpoint: "http://docker.for.mac.localhost:8000"
     });
     table = "BlogTable"
 } else {
